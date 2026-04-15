@@ -1,2 +1,64 @@
-# voxelreach-rewrite
-A 3D voxel game featuring chunk-based terrain generation and rendering, currently being rebuilt with a focus on better performance, and scalability.
+# VoxelReach Rewrite
+
+VoxelReach is a voxel game built using Java and LibGDX for a school project.
+This repository is a rewritten and improved version of my original code, where I'm focusing on better structure, cleaner code, and improved performance.
+
+---
+
+## 🎮 Current Features
+
+- Player camera and movement system
+- UI system for debugging
+- Easy system for adding new blocks
+
+---
+
+## 🎯 Planned Features
+
+### Priority
+- Chunk optimizations
+- Memory usage improvements
+- Rendering optimizations
+
+### Core Gameplay
+- Block placing and breaking system
+- Inventory system
+- Survival mechanics
+
+### World System
+- Improved chunk generation
+- World saving/loading
+- Better terrain generation
+
+### Polish
+- Sound effects
+- UI improvements
+- Environment improvements
+
+---
+
+## 🛠️ Software used
+
+- Java
+- libGDX
+- Gradle
+- IntelliJ IDEA
+
+---
+
+## 📁 Project Structure
+
+- `core/` – Main game logic
+- `lwjgl3/` – Window Launcher
+- `assets/` – Textures
+
+---
+
+## 🚀 How to Run
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/azetheon/voxelreach-rewrite.git
+2. Open the project in IntelliJ IDEA or an IDE of your choice
+3. Import as a Gradle project
+4. Run the "Lwjgl3Launcher.java" file in "lwjgl3/src/main/java/aze.games.voxelreach.lwjgl3"
