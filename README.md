@@ -3,6 +3,8 @@
 VoxelReach is a voxel game built using Java and LibGDX for a school project.
 This repository is a rewritten and improved version of my original code, where I'm focusing on better structure, cleaner code, and improved performance.
 
+![Screenshot of the current progress](https://raw.githubusercontent.com/azetheon/voxelreach-rewrite/refs/heads/main/screenshots/image.png)
+
 ---
 
 ## 🎮 Current Features
@@ -13,12 +15,14 @@ This repository is a rewritten and improved version of my original code, where I
 
 ---
 
-## 🎯 Planned Features
+## 🎯 Roadmap
 
 ### Priority
-- Chunk optimizations
-- Memory usage improvements
-- Rendering optimizations
+- Face culling ✔️
+- Greedy meshing
+- Frustum culling
+- Texture atlas
+- Compact block storage
 
 ### Core Gameplay
 - Block placing and breaking system
@@ -26,9 +30,8 @@ This repository is a rewritten and improved version of my original code, where I
 - Survival mechanics
 
 ### World System
-- Improved chunk generation
 - World saving/loading
-- Better terrain generation
+- Terrain generation
 
 ### Polish
 - Sound effects
