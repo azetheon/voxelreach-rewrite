@@ -16,6 +16,7 @@ This repository is a rewritten and improved version of my original code, where I
 ---
 
 ## 🎯 Roadmap
+The roadmap is a list of features I want to get done in the pre-alpha versions of this game
 
 ### Priority
 - Face culling ✔️
