@@ -51,9 +51,6 @@ public class Main extends ApplicationAdapter {
         spriteBatch.dispose();
         font.dispose();
         ChunkGeneration.cleanup();
-        for (AvailableBlocks.Block block : AvailableBlocks.getAllBlocks()) {
-            block.getModel().dispose();
-        }
         AvailableBlocks.cleanupTextures();
 
         /*

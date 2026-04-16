@@ -26,76 +26,12 @@ public class AvailableBlocks {
         // i don't use attributes rn but it's for future block attrtibutes
         // like the opacity for water or interactability for workshop blocks
 
-        private Model model;
-        private ModelInstance instance;
-
         public Block(String name, String top, String bottom, String side, String attribute) {
             this.name = name;
             this.top = getTexture(top);
             this.bottom = getTexture(bottom);
             this.side = getTexture(side);
             this.attribute = attribute;
-            createModel();
-        }
-
-        private void createModel() {
-            ModelBuilder modelBuilder = new ModelBuilder();
-            modelBuilder.begin();
-            float s = 1f;
-
-            modelBuilder.part("front", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates, new Material(TextureAttribute.createDiffuse(side)))
-                .rect(
-                    -s/2, -s/2, s/2,
-                    s/2, -s/2, s/2,
-                    s/2, s/2, s/2,
-                    -s/2, s/2, s/2,
-                    0, 0, 1);
-            modelBuilder.part("back", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates, new Material(TextureAttribute.createDiffuse(side)))
-                .rect(
-                    s/2, -s/2, -s/2,
-                    -s/2, -s/2, -s/2,
-                    -s/2, s/2, -s/2,
-                    s/2, s/2, -s/2,
-                    0, 0, -1);
-            modelBuilder.part("left", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates, new Material(TextureAttribute.createDiffuse(side)))
-                .rect(
-                    -s/2, -s/2, -s/2,
-                    -s/2, -s/2, s/2,
-                    -s/2, s/2, s/2,
-                    -s/2, s/2, -s/2,
-                    -1, 0, 0);
-            modelBuilder.part("right", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates, new Material(TextureAttribute.createDiffuse(side)))
-                .rect(
-                    s/2, -s/2, s/2,
-                    s/2, -s/2, -s/2,
-                    s/2, s/2, -s/2,
-                    s/2, s/2, s/2,
-                    1, 0, 0);
-            modelBuilder.part("top", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates, new Material(TextureAttribute.createDiffuse(top)))
-                .rect(
-                    -s/2, s/2, s/2,
-                    s/2, s/2, s/2,
-                    s/2, s/2, -s/2,
-                    -s/2, s/2, -s/2,
-                    0, 1, 0);
-            modelBuilder.part("bottom", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates, new Material(TextureAttribute.createDiffuse(bottom)))
-                .rect(
-                    -s/2, -s/2, -s/2,
-                    s/2, -s/2, -s/2,
-                    s/2, -s/2, s/2,
-                    -s/2, -s/2, s/2,
-                    0, -1, 0);
-
-            model = modelBuilder.end();
-            instance = new ModelInstance(model);
-        }
-
-        public Model getModel() {
-            return model;
-        }
-
-        public ModelInstance getInstance() {
-            return instance;
         }
 
         // needed by ChunkGeneration to build per-face mesh parts with the right textures
