@@ -21,16 +21,20 @@ public class AvailableBlocks {
     public static class Block {
         private String name;
         private Texture top, bottom, side;
-        private String opacity;
+        private String attribute;
+
+        // i don't use attributes rn but it's for future block attrtibutes
+        // like the opacity for water or interactability for workshop blocks
+
         private Model model;
         private ModelInstance instance;
 
-        public Block(String name, String top, String bottom, String side, String opacity) {
+        public Block(String name, String top, String bottom, String side, String attribute) {
             this.name = name;
             this.top = getTexture(top);
             this.bottom = getTexture(bottom);
             this.side = getTexture(side);
-            this.opacity = opacity;
+            this.attribute = attribute;
             createModel();
         }
 
@@ -93,6 +97,11 @@ public class AvailableBlocks {
         public ModelInstance getInstance() {
             return instance;
         }
+
+        // needed by ChunkGeneration to build per-face mesh parts with the right textures
+        public Texture getTopTexture()    { return top; }
+        public Texture getBottomTexture() { return bottom; }
+        public Texture getSideTexture()   { return side; }
     }
 
     private static Texture getTexture(String path) {
@@ -115,25 +124,25 @@ public class AvailableBlocks {
             "grass.png",
             "grass_bottom.png",
             "grass_side.png",
-            "solid"));
+            "none"));
         blocks.put("stone", new Block(
             "stone",
             "stone.png",
             "stone.png",
             "stone.png",
-            "solid"));
+            "none"));
         blocks.put("sand", new Block(
             "sand",
             "sand.png",
             "sand.png",
             "sand.png",
-            "solid"));
+            "none"));
         blocks.put("dirt", new Block(
             "dirt",
             "dirt.png",
             "dirt.png",
             "dirt.png",
-            "solid"));
+            "none"));
     }
 
     public static Block getBlock(String name) {

@@ -39,6 +39,9 @@ public class Main extends ApplicationAdapter {
         Gdx.gl.glClearColor(0.53f, 0.81f, 0.92f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
+        Gdx.gl.glEnable(GL20.GL_CULL_FACE);
+        Gdx.gl.glCullFace(GL20.GL_BACK);
+
         ChunkGeneration.renderChunks();
         UserInterface.drawDebug(spriteBatch, font);
     }
