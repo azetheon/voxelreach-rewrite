@@ -8,7 +8,8 @@ public class WorldEnvironment {
 
     public static void prepareEnvironment() {
         environment = new Environment();
-        environment.add(new DirectionalLight().set(1f, 1f, 1f, -1f, -0.8f, -0.2f));
+        environment.add(new DirectionalLight().set(1f, 1f, 1f, -1f, -1f, -1f));
+        environment.add(new DirectionalLight().set(0.3f, 0.3f, 0.35f, 1f, -0.5f, 1f));
     }
 
     public static Environment getEnvironment() {

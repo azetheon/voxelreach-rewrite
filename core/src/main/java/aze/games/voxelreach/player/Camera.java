@@ -72,11 +72,6 @@ public class Camera {
         overlayCamera.update();
     }
 
-    public static void overlayCamera() {
-        OrthographicCamera overlayCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        overlayCamera.position.set(overlayCamera.viewportWidth / 2.0f, overlayCamera.viewportHeight / 2.0f, 1.0f);
-    }
-
     public static void playerMovement() {
         float delta = Gdx.graphics.getDeltaTime();
         float movementSpeed;

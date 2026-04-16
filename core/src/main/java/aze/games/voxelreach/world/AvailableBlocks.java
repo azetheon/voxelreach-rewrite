@@ -34,10 +34,16 @@ public class AvailableBlocks {
             this.attribute = attribute;
         }
 
-        // needed by ChunkGeneration to build per-face mesh parts with the right textures
-        public Texture getTopTexture()    { return top; }
-        public Texture getBottomTexture() { return bottom; }
-        public Texture getSideTexture()   { return side; }
+        // the fix for everything being stone bruh
+        public Texture getTopTexture() {
+            return top;
+        }
+        public Texture getBottomTexture() {
+            return bottom;
+        }
+        public Texture getSideTexture() {
+            return side;
+        }
     }
 
     private static Texture getTexture(String path) {

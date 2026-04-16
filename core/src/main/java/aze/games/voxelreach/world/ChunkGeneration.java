@@ -18,6 +18,7 @@ public class ChunkGeneration {
 
     private static int voxelCounter = 0;
     private static int currentChunkCounter = 0;
+    private static int chunkRebuildsCounter = 0;
 
     private static ModelBatch modelBatch;
     private static List<ModelInstance> chunks = new ArrayList<>();
@@ -145,11 +146,146 @@ public class ChunkGeneration {
         currentChunkCounter++;
     }
 
+    public static void rebuildChunk() {
+        // plz no memory leak i beg
+        for (Model model : chunkModels) {
+            model.dispose();
+        }
+
+        chunkModels.clear();
+        chunks.clear();
+
+        ModelBuilder builder = new ModelBuilder();
+        builder.begin();
+
+        float s = 1f;
+
+        for (int x = 0; x < chunkSize; x++) {
+            for (int y = 0; y < chunkSize; y++) {
+                for (int z = 0; z < chunkSize; z++) {
+
+                    Block block = blocks[x][y][z];
+                    if (block == null) continue;
+
+                    if (isAir(x, y, z + 1)) {
+                        builder.part("front", GL20.GL_TRIANGLES,
+                                VertexAttributes.Usage.Position |
+                                    VertexAttributes.Usage.Normal |
+                                    VertexAttributes.Usage.TextureCoordinates,
+                                new Material(TextureAttribute.createDiffuse(block.getSideTexture())))
+                            .rect(
+                                x - s/2, y - s/2, z + s/2,
+                                x + s/2, y - s/2, z + s/2,
+                                x + s/2, y + s/2, z + s/2,
+                                x - s/2, y + s/2, z + s/2,
+                                0, 0, 1);
+                    }
+
+                    if (isAir(x, y, z - 1)) {
+                        builder.part("back", GL20.GL_TRIANGLES,
+                                VertexAttributes.Usage.Position |
+                                    VertexAttributes.Usage.Normal |
+                                    VertexAttributes.Usage.TextureCoordinates,
+                                new Material(TextureAttribute.createDiffuse(block.getSideTexture())))
+                            .rect(
+                                x + s/2, y - s/2, z - s/2,
+                                x - s/2, y - s/2, z - s/2,
+                                x - s/2, y + s/2, z - s/2,
+                                x + s/2, y + s/2, z - s/2,
+                                0, 0, -1);
+                    }
+
+                    if (isAir(x - 1, y, z)) {
+                        builder.part("left", GL20.GL_TRIANGLES,
+                                VertexAttributes.Usage.Position |
+                                    VertexAttributes.Usage.Normal |
+                                    VertexAttributes.Usage.TextureCoordinates,
+                                new Material(TextureAttribute.createDiffuse(block.getSideTexture())))
+                            .rect(
+                                x - s/2, y - s/2, z - s/2,
+                                x - s/2, y - s/2, z + s/2,
+                                x - s/2, y + s/2, z + s/2,
+                                x - s/2, y + s/2, z - s/2,
+                                -1, 0, 0);
+                    }
+
+                    if (isAir(x + 1, y, z)) {
+                        builder.part("right", GL20.GL_TRIANGLES,
+                                VertexAttributes.Usage.Position |
+                                    VertexAttributes.Usage.Normal |
+                                    VertexAttributes.Usage.TextureCoordinates,
+                                new Material(TextureAttribute.createDiffuse(block.getSideTexture())))
+                            .rect(
+                                x + s/2, y - s/2, z + s/2,
+                                x + s/2, y - s/2, z - s/2,
+                                x + s/2, y + s/2, z - s/2,
+                                x + s/2, y + s/2, z + s/2,
+                                1, 0, 0);
+                    }
+
+                    if (isAir(x, y + 1, z)) {
+                        builder.part("top", GL20.GL_TRIANGLES,
+                                VertexAttributes.Usage.Position |
+                                    VertexAttributes.Usage.Normal |
+                                    VertexAttributes.Usage.TextureCoordinates,
+                                new Material(TextureAttribute.createDiffuse(block.getTopTexture())))
+                            .rect(
+                                x - s/2, y + s/2, z + s/2,
+                                x + s/2, y + s/2, z + s/2,
+                                x + s/2, y + s/2, z - s/2,
+                                x - s/2, y + s/2, z - s/2,
+                                0, 1, 0);
+                    }
+
+                    if (isAir(x, y - 1, z)) {
+                        builder.part("bottom", GL20.GL_TRIANGLES,
+                                VertexAttributes.Usage.Position |
+                                    VertexAttributes.Usage.Normal |
+                                    VertexAttributes.Usage.TextureCoordinates,
+                                new Material(TextureAttribute.createDiffuse(block.getBottomTexture())))
+                            .rect(
+                                x - s/2, y - s/2, z - s/2,
+                                x + s/2, y - s/2, z - s/2,
+                                x + s/2, y - s/2, z + s/2,
+                                x - s/2, y - s/2, z + s/2,
+                                0, -1, 0);
+                    }
+                }
+            }
+        }
+
+        chunkRebuildsCounter += 1;
+
+        Model model = builder.end();
+        chunkModels.add(model);
+
+        ModelInstance instance = new ModelInstance(model);
+        chunks.add(instance);
+    }
+
     private static boolean isAir(int x, int y, int z) {
         if (x < 0 || y < 0 || z < 0 || x >= chunkSize || y >= chunkSize || z >= chunkSize) {
             return true;
         }
         return blocks[x][y][z] == null;
+    }
+
+    public static Block getBlock(int x, int y, int z) {
+        if (x < 0 || y < 0 || z < 0 || x >= chunkSize || y >= chunkSize || z >= chunkSize)
+            return null;
+
+        return blocks[x][y][z];
+    }
+
+    public static void setBlock(int x, int y, int z, Block block) {
+        if (x < 0 || y < 0 || z < 0 || x >= chunkSize || y >= chunkSize || z >= chunkSize)
+            return;
+
+        if (block != null && blocks[x][y][z] != null) {
+            return;
+        }
+
+        blocks[x][y][z] = block;
     }
 
     public static void renderChunks() {
@@ -173,5 +309,9 @@ public class ChunkGeneration {
 
     public static int getChunkCount() {
         return currentChunkCounter;
+    }
+
+    public static int getChunkRebuildsCounter() {
+        return chunkRebuildsCounter;
     }
 }
