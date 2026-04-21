@@ -13,15 +13,18 @@ import aze.games.voxelreach.world.WorldEnvironment;
 import aze.games.voxelreach.world.ChunkGeneration;
 import aze.games.voxelreach.player.UserInterface;
 import aze.games.voxelreach.player.Raycast;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Main extends ApplicationAdapter {
     SpriteBatch spriteBatch;
     BitmapFont font;
+    ShapeRenderer shapeRenderer;
 
     @Override
     public void create() {
         spriteBatch = new SpriteBatch();
         font = new BitmapFont();
+        shapeRenderer = new ShapeRenderer();
         Gdx.input.setCursorCatched(true);
 
         Camera.prepareCamera();
@@ -49,6 +52,7 @@ public class Main extends ApplicationAdapter {
 
         ChunkGeneration.renderChunks();
         UserInterface.drawDebug(spriteBatch, font);
+        UserInterface.drawHotbar(shapeRenderer, font, spriteBatch);
 
         if (hit.hit) {
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
@@ -57,16 +61,16 @@ public class Main extends ApplicationAdapter {
             }
             if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
                 // this is an unholy amount of if statements but it's just temporary, will change later when I add more blocks
-                if (UserInterface.selectedBlock == 0) {
+                if (UserInterface.selectedBlock == 4) {
                     ChunkGeneration.setBlock(hit.faceX, hit.faceY, hit.faceZ, AvailableBlocks.getBlock("grass"));
                 }
-                else if (UserInterface.selectedBlock == 1) {
+                else if (UserInterface.selectedBlock == 5) {
                     ChunkGeneration.setBlock(hit.faceX, hit.faceY, hit.faceZ, AvailableBlocks.getBlock("dirt"));
                 }
-                else if (UserInterface.selectedBlock == 2) {
+                else if (UserInterface.selectedBlock == 6) {
                     ChunkGeneration.setBlock(hit.faceX, hit.faceY, hit.faceZ, AvailableBlocks.getBlock("stone"));
                 }
-                else if (UserInterface.selectedBlock == 3) {
+                else if (UserInterface.selectedBlock == 7) {
                     ChunkGeneration.setBlock(hit.faceX, hit.faceY, hit.faceZ, AvailableBlocks.getBlock("sand"));
                 }
                 ChunkGeneration.rebuildChunk();

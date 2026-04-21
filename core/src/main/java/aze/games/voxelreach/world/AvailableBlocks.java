@@ -1,13 +1,6 @@
 package aze.games.voxelreach.world;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.Material;
-import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.graphics.VertexAttributes;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -93,5 +86,16 @@ public class AvailableBlocks {
 
     public static Collection<Block> getAllBlocks() {
         return Collections.unmodifiableCollection(blocks.values());
+    }
+
+    // this will only be here until I make the block images be dynamic, for now since there's only 4 blocks I'll just do this
+    public static String getBlockNameForSlot(int slotIndex) {
+        switch (slotIndex) {
+            case 4: return "grass";
+            case 5: return "dirt";
+            case 6: return "stone";
+            case 7: return "sand";
+            default: return null;
+        }
     }
 }
