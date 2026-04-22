@@ -19,7 +19,7 @@ This repository is a rewritten and improved version of my original code, where I
 ## 🎯 Roadmap
 The roadmap is a list of features I want to get done in the pre-alpha versions of this game
 
-### Priority
+### Optimization
 - Face culling ✔️
 - Greedy meshing
 - Frustum culling
@@ -28,7 +28,7 @@ The roadmap is a list of features I want to get done in the pre-alpha versions o
 
 ### Core Gameplay
 - Basic block placing and breaking system ✔️
-- Inventory system
+- Inventory system (working on this right now)
 - Survival mechanics
 
 ### World System
