@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 
+import aze.games.voxelreach.player.UserInterface;
+
 public class Camera {
     private static PerspectiveCamera camera;
     private static OrthographicCamera overlayCamera;
@@ -24,6 +26,8 @@ public class Camera {
     }
 
     public static void cameraMovement() {
+        if (UserInterface.getChatStatus()) return; // if chat is open i don't want the camera to move around
+
         int screenX = Gdx.input.getX();
         int screenY = Gdx.input.getY();
 
@@ -73,6 +77,8 @@ public class Camera {
     }
 
     public static void playerMovement() {
+        if (UserInterface.getChatStatus()) return; // don't move while chat is open
+
         float delta = Gdx.graphics.getDeltaTime();
         float movementSpeed;
 

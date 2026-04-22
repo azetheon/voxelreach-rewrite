@@ -10,14 +10,30 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class UserInterface {
     private static boolean showDebug = true;
+    private static boolean showConsole = false;
     private static float screenCenterX = Gdx.graphics.getWidth() / 2f;
     private static float screenCenterY = Gdx.graphics.getHeight() / 2f;
 
     public static int selectedBlock = 0;
 
+    static StringBuilder consoleInput = new StringBuilder();
+
+    public static boolean getChatStatus() {
+        return showConsole;
+    }
+
     public static void update() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.F1)) {
             showDebug = !showDebug;
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.T) && !showConsole) {
+            showConsole = true;
+            consoleInput.setLength(0);
+            Gdx.input.setCursorCatched(false);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && showConsole) {
+            showConsole = false;
+            Gdx.input.setCursorCatched(true);
         }
 
         int[] slots = {0, 1, 4, 5, 6, 7};
@@ -119,9 +135,9 @@ public class UserInterface {
 
         float slotsStartX = startX + padding;
 
-        // skip slot 2 and 3, I want to make it so that the hobar goes
+        // skip slot 2 and 3, I want to make it so that the hotbar goes
         // Tool Tool                 Block Block Block Block
-        // i think it'd be a cool gameplay feature
+        // I think it'd be a cool gameplay feature
         for (int i = 0; i < totalSlots; i++) {
             if (i == 2 || i == 3) continue;
 
@@ -178,5 +194,31 @@ public class UserInterface {
         spriteBatch.end();
 
         Gdx.gl.glLineWidth(1f);
+    }
+
+    public static void drawConsole(ShapeRenderer shapeRenderer, BitmapFont font, SpriteBatch spriteBatch) {
+        if (!showConsole) return;
+        shapeRenderer.setProjectionMatrix(Camera.getOverlay().combined);
+
+        float consoleX = 10.f;
+        float consoleY = 20.f;
+        float consoleWidth = 350.f;
+        float consoleHeight = 20.f;
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(26/255f, 16/255f, 8/255f, 0.92f);
+        shapeRenderer.rect(consoleX, consoleY, consoleWidth, consoleHeight);
+        shapeRenderer.end();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        Gdx.gl.glLineWidth(2f);
+        shapeRenderer.setColor(92/255f, 58/255f, 30/255f, 1f);
+        shapeRenderer.rect(consoleX, consoleY, consoleWidth, consoleHeight);
+        shapeRenderer.end();
+
+        spriteBatch.setProjectionMatrix(Camera.getOverlay().combined);
+        spriteBatch.begin();
+        font.draw(spriteBatch, consoleInput.toString(), consoleX + 5, consoleY + 15);
+        spriteBatch.end();
     }
 }

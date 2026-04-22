@@ -1,11 +1,13 @@
 package aze.games.voxelreach;
 
+import aze.games.voxelreach.player.TextInput;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import aze.games.voxelreach.player.Camera;
 import aze.games.voxelreach.world.AvailableBlocks;
@@ -13,7 +15,6 @@ import aze.games.voxelreach.world.WorldEnvironment;
 import aze.games.voxelreach.world.ChunkGeneration;
 import aze.games.voxelreach.player.UserInterface;
 import aze.games.voxelreach.player.Raycast;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Main extends ApplicationAdapter {
     SpriteBatch spriteBatch;
@@ -26,6 +27,8 @@ public class Main extends ApplicationAdapter {
         font = new BitmapFont();
         shapeRenderer = new ShapeRenderer();
         Gdx.input.setCursorCatched(true);
+
+        Gdx.input.setInputProcessor(new TextInput());
 
         Camera.prepareCamera();
         Camera.prepareOverlayCamera();
@@ -53,6 +56,7 @@ public class Main extends ApplicationAdapter {
         ChunkGeneration.renderChunks();
         UserInterface.drawDebug(spriteBatch, font);
         UserInterface.drawHotbar(shapeRenderer, font, spriteBatch);
+        UserInterface.drawConsole(shapeRenderer, font, spriteBatch);
 
         if (hit.hit) {
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
