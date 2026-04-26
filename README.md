@@ -29,6 +29,7 @@ The roadmap is a list of features I want to get done in the pre-alpha versions o
 ### Core Gameplay
 - Basic block placing and breaking system ✔️
 - Inventory system (working on this right now)
+- Hotbar ✔️
 - Survival mechanics
 
 ### World System
