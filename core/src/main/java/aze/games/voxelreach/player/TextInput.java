@@ -13,8 +13,8 @@ public class TextInput implements InputProcessor {
             return true;
         }
 
-        if (character == '\n') { // when enter is pressed remove the characters i'll implement the command execution here
-            UserInterface.consoleInput.setLength(0);
+        if (character == '\n') {
+            UserInterface.executeConsoleCommand();
             return true;
         }
 

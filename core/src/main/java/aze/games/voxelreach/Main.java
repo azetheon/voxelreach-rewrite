@@ -60,24 +60,20 @@ public class Main extends ApplicationAdapter {
 
         if (hit.hit) {
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                AvailableBlocks.Block broken = ChunkGeneration.getBlock(hit.x, hit.y, hit.z);
+                if (broken != null) {
+                    UserInterface.giveBlock(broken.getName());
+                }
                 ChunkGeneration.setBlock(hit.x, hit.y, hit.z, null);
                 ChunkGeneration.rebuildChunk();
             }
             if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
-                // this is an unholy amount of if statements but it's just temporary, will change later when I add more blocks
-                if (UserInterface.selectedBlock == 4) {
-                    ChunkGeneration.setBlock(hit.faceX, hit.faceY, hit.faceZ, AvailableBlocks.getBlock("grass"));
+                String selectedBlock = UserInterface.getSelectedBlockName();
+                if (selectedBlock != null) {
+                    ChunkGeneration.setBlock(hit.faceX, hit.faceY, hit.faceZ, AvailableBlocks.getBlock(selectedBlock));
+                    UserInterface.consumeSelectedBlock();
+                    ChunkGeneration.rebuildChunk();
                 }
-                else if (UserInterface.selectedBlock == 5) {
-                    ChunkGeneration.setBlock(hit.faceX, hit.faceY, hit.faceZ, AvailableBlocks.getBlock("dirt"));
-                }
-                else if (UserInterface.selectedBlock == 6) {
-                    ChunkGeneration.setBlock(hit.faceX, hit.faceY, hit.faceZ, AvailableBlocks.getBlock("stone"));
-                }
-                else if (UserInterface.selectedBlock == 7) {
-                    ChunkGeneration.setBlock(hit.faceX, hit.faceY, hit.faceZ, AvailableBlocks.getBlock("sand"));
-                }
-                ChunkGeneration.rebuildChunk();
             }
         }
     }

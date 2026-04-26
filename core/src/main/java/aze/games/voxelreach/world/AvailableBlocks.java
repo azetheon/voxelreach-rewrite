@@ -27,6 +27,8 @@ public class AvailableBlocks {
             this.attribute = attribute;
         }
 
+        public String getName() { return name; }
+
         // the fix for everything being stone bruh
         public Texture getTopTexture() {
             return top;
@@ -88,14 +90,4 @@ public class AvailableBlocks {
         return Collections.unmodifiableCollection(blocks.values());
     }
 
-    // this will only be here until I make the block images be dynamic, for now since there's only 4 blocks I'll just do this
-    public static String getBlockNameForSlot(int slotIndex) {
-        switch (slotIndex) {
-            case 4: return "grass";
-            case 5: return "dirt";
-            case 6: return "stone";
-            case 7: return "sand";
-            default: return null;
-        }
-    }
 }
